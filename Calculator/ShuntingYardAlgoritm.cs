@@ -1,7 +1,8 @@
-﻿using Calculator;
-using System.Text;
+﻿using System.Text;
 
-internal class ShuntingYardAlgoritm
+namespace Calculator;
+
+public class ShuntingYardAlgoritm
 {
     public static string ConvertInfixToPostFix(IEnumerable<Token> tokens)
     {
@@ -17,7 +18,7 @@ internal class ShuntingYardAlgoritm
                 if (operators.Count > 0)
                 {
                     Operator top = operators.Peek();
-                    Operator cur = CalcMath.StringToOperator(tk.Value);
+                    Operator cur = tk.Value.StringToOperator();
                     if (top.Ranking < cur.Ranking)
                     {
                         operators.Push(cur);
@@ -28,20 +29,20 @@ internal class ShuntingYardAlgoritm
                         builder.Append(o.Value + " ");
                         operators.Push(cur);
                     }
-                   
+
                 }
                 else
                 {
-                    operators.Push(CalcMath.StringToOperator(tk.Value));
+                    operators.Push(tk.Value.StringToOperator());
                 }
 
                 continue;
             }
-            builder.Append(tk.Value + " " );
+            builder.Append(tk.Value + " ");
 
         }
 
-        while(operators.Count > 0)
+        while (operators.Count > 0)
         {
             var op = operators.Pop();
             builder.Append(op.Value + " ");

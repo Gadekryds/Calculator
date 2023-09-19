@@ -1,6 +1,5 @@
 ﻿
 using Calculator;
-using System.Globalization;
 
 ApplicationSetup.SetupApplication();
 string input = Console.ReadLine()!;

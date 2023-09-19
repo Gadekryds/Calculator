@@ -1,5 +1,6 @@
-﻿using Calculator;
-using System.Text;
+﻿using System.Text;
+
+namespace Calculator;
 
 public class Token
 {
