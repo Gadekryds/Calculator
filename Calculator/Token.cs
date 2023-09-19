@@ -1,18 +1,7 @@
-﻿
-
-// Shunting-Yard Algorithm
-// Convert infix to postfix (RPN - Reverse Polish Notation) notation
-// Return an array of tokens in RPN order
-
-
-
-
-
-
-
+﻿using Calculator;
 using System.Text;
 
-class Token
+public class Token
 {
     public Token(string value, TokenType type)
     {
@@ -22,43 +11,42 @@ class Token
 
     public string Value { get; set; }
     public TokenType Type { get; set; }
-    public IList<Token> Children { get; set; } = new List<Token>();
-    public Token? Parent { get; set; }
 
     public static IEnumerable<Token> ConvertStringToTokens(string input)
     {
         if (string.IsNullOrWhiteSpace(input))
             return Array.Empty<Token>();
 
-        var tokens = new List<Token>();
-
-        int index = -1;
+        List<Token> tokens = new();
         StringBuilder builder = new();
-        while (index < input.Length - 1)
+
+        Queue<char> chars = new();
+
+        foreach (char c in input)
         {
-            index++;
-
-            if (input[index] == ' ')
-            {
-                string value = builder.ToString();
-                if (value == string.Empty)
-                    continue;
-
-                TokenType type = MathOperators.AllowedOperators.Select(x => x.Value).Contains(value) ? TokenType.OPERATOR : TokenType.NUMBER;
-                tokens.Add(new Token(value, type));
-                builder = new();
-            }
-            else
-            {
-                builder.Append(input[index]);
-            }
-
+            chars.Enqueue(c);
         }
 
-        string endV = builder.ToString();
-        TokenType endT = MathOperators.AllowedOperators.Select(x => x.Value).Contains(endV) ? TokenType.OPERATOR : TokenType.NUMBER;
-        tokens.Add(new Token(endV, endT));
-
+        while (chars.Count > 0)
+        {
+            var c = chars.Dequeue();
+            if (c.IsOperator() || c == ' ')
+            {
+                string val = builder.ToString();
+                tokens.Add(new Token(val, val.SolveTokenType()));
+                builder = new();
+                string oVal = c.ToString();
+                tokens.Add(new Token(oVal, oVal.SolveTokenType()));
+                continue;
+            }
+            builder.Append(c);
+        }
+        if (builder.Length > 0)
+        {
+            var val = builder.ToString();
+            tokens.Add(new Token(val, val.SolveTokenType()));
+        }
         return tokens;
     }
+
 }

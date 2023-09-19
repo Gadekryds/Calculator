@@ -1,22 +1,23 @@
-﻿using System.Text;
+﻿using Calculator;
+using System.Text;
 
 internal class ShuntingYardAlgoritm
 {
-    public static string ConvertInfixToPostFix(IEnumerable<string> vs)
+    public static string ConvertInfixToPostFix(IEnumerable<Token> tokens)
     {
         Stack<Operator> operators = new();
         StringBuilder builder = new();
 
-        List<string> operatorSigns = MathOperators.AllowedOperators.Select(x => x.Value).ToList();
-        foreach (string s in vs)
+        List<string> operatorSigns = CalcMath.AllowedOperators.Select(x => x.Value).ToList();
+        foreach (Token tk in tokens)
         {
             // Operator logic
-            if (operatorSigns.Contains(s))
+            if (tk.Type == TokenType.OPERATOR)
             {
                 if (operators.Count > 0)
                 {
                     Operator top = operators.Peek();
-                    Operator cur = MathOperators.StringToOperator(s);
+                    Operator cur = CalcMath.StringToOperator(tk.Value);
                     if (top.Ranking < cur.Ranking)
                     {
                         operators.Push(cur);
@@ -24,19 +25,19 @@ internal class ShuntingYardAlgoritm
                     else
                     {
                         Operator o = operators.Pop();
-                        builder.Append(o + " ");
+                        builder.Append(o.Value + " ");
                         operators.Push(cur);
                     }
                    
                 }
                 else
                 {
-                    operators.Push(MathOperators.StringToOperator(s));
+                    operators.Push(CalcMath.StringToOperator(tk.Value));
                 }
 
                 continue;
             }
-            builder.Append(s + " " );
+            builder.Append(tk.Value + " " );
 
         }
 
