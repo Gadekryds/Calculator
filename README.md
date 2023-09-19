@@ -3,8 +3,8 @@
 The calculator accepts 
 * integers
 * doubles
-* +
-* -
+* \+
+* \-
 * \*
 * /
 
