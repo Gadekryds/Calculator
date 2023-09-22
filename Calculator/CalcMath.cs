@@ -47,6 +47,7 @@ public static class CalcMath
                 var op2 = operands.Pop();
 
                 var result = EvaluateCalculation(x, op1, op2);
+                Console.WriteLine($"{op1} {x} {op2} = {result}");
                 operands.Push(result.ToString());
             }
             else

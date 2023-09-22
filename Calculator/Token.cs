@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace Calculator;
+﻿namespace Calculator;
 
 public class Token
 {
@@ -13,16 +11,12 @@ public class Token
     public string Value { get; set; }
     public TokenType Type { get; set; }
 
-    public static IEnumerable<Token> ConvertStringToTokens(string input)
+    public static Token Create(string value)
+        => new(value, value.SolveTokenType());
+
+    public static IEnumerable<Token> Converter(string input)
     {
-        if (string.IsNullOrWhiteSpace(input))
-            return Array.Empty<Token>();
-
-        List<Token> tokens = new();
-        StringBuilder builder = new();
-
         Queue<char> chars = new();
-
         foreach (char c in input)
         {
             chars.Enqueue(c);
@@ -30,24 +24,20 @@ public class Token
 
         while (chars.Count > 0)
         {
-            var c = chars.Dequeue();
-            if (c.IsOperator() || c == ' ')
+            char c = chars.Dequeue();
+
+            if (c.IsNumber())
             {
-                string val = builder.ToString();
-                tokens.Add(new Token(val, val.SolveTokenType()));
-                builder = new();
-                string oVal = c.ToString();
-                tokens.Add(new Token(oVal, oVal.SolveTokenType()));
+                yield return TokenExtensions.CreateNumberToken(c, chars);
                 continue;
             }
-            builder.Append(c);
+
+            if (c.IsOperator())
+            {
+                yield return Token.Create(c.ToString());
+                continue;
+            }
         }
-        if (builder.Length > 0)
-        {
-            var val = builder.ToString();
-            tokens.Add(new Token(val, val.SolveTokenType()));
-        }
-        return tokens;
     }
 
 }
