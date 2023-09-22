@@ -2,13 +2,13 @@
 
 public static class CalcMath
 {
-    public static readonly Operator[] AllowedOperators = new Operator[]
-    {
-    new Operator(1, "Plus", "+"),
-    new Operator(1, "Minus", "-"),
-    new Operator(2, "Multiply", "*"),
-    new Operator(2, "Divide", "/")
-    };
+    public static readonly Operator[] AllowedOperators =
+    [
+        new(1, "Plus", "+"),
+        new(1, "Minus", "-"),
+        new(2, "Multiply", "*"),
+        new(2, "Divide", "/")
+    ];
 
     public static Operator StringToOperator(this string str) => str switch
     {
@@ -16,7 +16,7 @@ public static class CalcMath
         "-" => AllowedOperators.FirstOrDefault(x => x.Value == "-")!,
         "*" => AllowedOperators.FirstOrDefault(x => x.Value == "*")!,
         "/" => AllowedOperators.FirstOrDefault(x => x.Value == "/")!,
-        _ => throw new ArgumentException()
+        _ => throw new ArgumentException($"Operator not supported: {str}")
     };
 
     public static double EvaluateCalculation(string op, string num1, string num2)
@@ -29,7 +29,7 @@ public static class CalcMath
             "-" => d1 - d2,
             "*" => d1 * d2,
             "/" => d1 / d2,
-            _ => throw new ArgumentException(nameof(op))
+            _ => throw new ArgumentException($"Calculation evaluation not supported for operator: {op}", nameof(op))
         };
     }
 

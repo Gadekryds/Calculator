@@ -10,6 +10,12 @@ while (true)
     ApplicationSetup.TranslateCulturalDifference(input);
 
     var tk = Token.Converter(input);
+    Console.WriteLine("\n---------------Identified Tokens----------------");
+    foreach (var t in tk)
+    {
+        Console.WriteLine(t);
+    }
+
     var tokens = ShuntingYardAlgoritm.ConvertInfixToPostFix(tk);
     Console.WriteLine("\n---------------Postfix Conversion---------------");
     Console.WriteLine($"{tokens}");

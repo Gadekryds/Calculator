@@ -1,16 +1,7 @@
 ﻿namespace Calculator;
 
-public class Token
+public record Token(string Value, TokenType Type)
 {
-    public Token(string value, TokenType type)
-    {
-        Value = value;
-        Type = type;
-    }
-
-    public string Value { get; set; }
-    public TokenType Type { get; set; }
-
     public static Token Create(string value)
         => new(value, value.SolveTokenType());
 
