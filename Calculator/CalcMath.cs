@@ -1,16 +1,18 @@
-﻿namespace Calculator;
+﻿using System.Reflection.Metadata.Ecma335;
+
+namespace Calculator;
 
 public static class CalcMath
 {
-    public static readonly Operator[] AllowedOperators =
-    [
+    public static readonly Operator[] AllowedOperators = new Operator[]
+    {
         new(1, "Plus", "+"),
         new(1, "Minus", "-"),
         new(2, "Multiply", "*"),
         new(2, "Divide", "/")
-    ];
+    };
 
-    public static Operator StringToOperator(this string str) => str switch
+    public static Operator ToOperator(this string str) => str switch
     {
         "+" => AllowedOperators.FirstOrDefault(x => x.Value == "+")!,
         "-" => AllowedOperators.FirstOrDefault(x => x.Value == "-")!,
@@ -18,6 +20,9 @@ public static class CalcMath
         "/" => AllowedOperators.FirstOrDefault(x => x.Value == "/")!,
         _ => throw new ArgumentException($"Operator not supported: {str}")
     };
+
+    public static Operator ToOperator(this Token tk) =>
+        AllowedOperators.FirstOrDefault(x => x.Value == tk.Value)!;
 
     public static double EvaluateCalculation(string op, string num1, string num2)
     {

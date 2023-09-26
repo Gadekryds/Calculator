@@ -16,7 +16,7 @@ while (true)
         Console.WriteLine(t);
     }
 
-    var tokens = ShuntingYardAlgoritm.ConvertInfixToPostFix(tk);
+    var tokens = ShuntingYardAlgoritm.ConvertInfixToPostfixV2(tk);
     Console.WriteLine("\n---------------Postfix Conversion---------------");
     Console.WriteLine($"{tokens}");
 
@@ -26,15 +26,16 @@ while (true)
     Console.WriteLine("\n---------------Result---------------");
     Console.WriteLine($"{result}");
 
-    Console.WriteLine("\nStart over? Y/N");
+    Console.WriteLine("\nExit? Y/N");
     var k = Console.ReadKey();
 
     if (k.Key == ConsoleKey.Y)
     {
-        Console.Clear();
-        continue;
+        break;
     }
     else
-        break;
+    {
+        Console.Clear();
+    }
 }
 

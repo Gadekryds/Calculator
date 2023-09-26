@@ -17,16 +17,17 @@ public record Token(string Value, TokenType Type)
         {
             char c = chars.Dequeue();
 
+            if (c == ' ')
+                continue;
+
             if (c.IsNumber())
             {
                 yield return TokenExtensions.CreateNumberToken(c, chars);
                 continue;
             }
-
-            if (c.IsOperator())
+            else
             {
                 yield return Token.Create(c.ToString());
-                continue;
             }
         }
     }
