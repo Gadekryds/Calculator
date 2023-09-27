@@ -15,5 +15,19 @@ namespace Calculator.Tests
 
             Assert.Equal(expected, res);
         }
+
+        [Fact]
+        public void Result_ShouldBe_True()
+        {
+            string input = "(2+2)*7+(2+(7+1))";
+            double expected = 36;
+
+            var tokenize = Token.Converter(input);
+            var conversion = ShuntingYardAlgoritm.ConvertInfixToPostfixV2(tokenize);
+            double result = CalcMath.EvaluatePostFixExpression(conversion);
+
+            Assert.Equal(expected, result);
+
+        }
     }
 }

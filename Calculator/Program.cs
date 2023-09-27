@@ -10,20 +10,20 @@ while (true)
     ApplicationSetup.TranslateCulturalDifference(input);
 
     var tk = Token.Converter(input);
-    Console.WriteLine("\n---------------Identified Tokens----------------");
+    ConsoleUIHelpers.InsertHeader("Identified Tokens", '-');
     foreach (var t in tk)
     {
         Console.WriteLine(t);
     }
 
     var tokens = ShuntingYardAlgoritm.ConvertInfixToPostfixV2(tk);
-    Console.WriteLine("\n---------------Postfix Conversion---------------");
+    ConsoleUIHelpers.InsertHeader("Postfix Conversion", '-');
     Console.WriteLine($"{tokens}");
 
-    Console.WriteLine("\n---------------Evaluation---------------");
+    ConsoleUIHelpers.InsertHeader("Evaluation", '-');
     var result = CalcMath.EvaluatePostFixExpression(tokens);
 
-    Console.WriteLine("\n---------------Result---------------");
+    ConsoleUIHelpers.InsertHeader("Result", '-');
     Console.WriteLine($"{result}");
 
     Console.WriteLine("\nExit? Y/N");
