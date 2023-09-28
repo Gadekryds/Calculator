@@ -48,11 +48,12 @@ public static class CalcMath
         {
             if (allowedOperators.Contains(x))
             {
-                var op1 = operands.Pop();
                 var op2 = operands.Pop();
+                var op1 = operands.Pop();
 
                 var result = EvaluateCalculation(x, op1, op2);
-                Console.WriteLine($"{op1} {x} {op2} = {result}");
+                string calcStr = $"{op1} {x} {op2} = {result}";
+                Console.WriteLine(calcStr);
                 operands.Push(result.ToString());
             }
             else

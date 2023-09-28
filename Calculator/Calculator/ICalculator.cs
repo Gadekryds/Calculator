@@ -8,6 +8,7 @@ namespace Calculator.Calculator
 {
     public interface ICalculator
     {
-        
+        CalculationMetaData EvaluateExpression(string infixExpression);
+
     }
 }
