@@ -10,7 +10,7 @@ public static class ShuntingYardAlgoritm
     {
         Queue<Token> queue = new();
         StringBuilder builder = new();
-        Stack<Token> operators = new Stack<Token>();
+        Stack<Token> operators = new();
 
         foreach (var tk in tokens)
         {

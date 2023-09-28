@@ -1,4 +1,5 @@
-﻿using System.Reflection.Metadata.Ecma335;
+﻿using Calculator.Calculation.Internals;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Calculator;
 
@@ -38,7 +39,7 @@ public static class CalcMath
         };
     }
 
-    public static (double result, IEnumerable<string> evaluations) EvaluatePostFixExpression(string input)
+    public static CalculationEvaluation EvaluatePostFixExpression(string input)
     {
         Stack<string> operands = new();
         List<string> evaluations = new();
@@ -62,7 +63,7 @@ public static class CalcMath
             }
         }
         var endResult = operands.Pop();
-        return (double.Parse(endResult), evaluations);
+        return new CalculationEvaluation(double.Parse(endResult), evaluations);
     }
 }
 

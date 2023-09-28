@@ -1,6 +1,6 @@
 ﻿
 using Calculator;
-using Calculator.Calculator;
+using Calculator.Calculation;
 
 ApplicationSetup.SetupApplication();
 
