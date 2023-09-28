@@ -8,7 +8,12 @@ namespace Calculator.Calculator
 {
     public class CalculationMetaData
     {
-        public string InfixExpression { get; set; } = string.Empty;
+        public CalculationMetaData(string infixExpression)
+        {
+            InfixExpression = infixExpression;
+        }
+
+        public string InfixExpression { get; } = string.Empty;
         public IEnumerable<Token> ExpressionTokens { get; set; } = new List<Token>();
         public string PostfixExpression { get; set; } = string.Empty;
         public IEnumerable<string> EvaluationSteps { get; set; } = new List<string>();

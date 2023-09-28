@@ -38,9 +38,10 @@ public static class CalcMath
         };
     }
 
-    public static double EvaluatePostFixExpression(string input)
+    public static (double result, IEnumerable<string> evaluations) EvaluatePostFixExpression(string input)
     {
         Stack<string> operands = new();
+        List<string> evaluations = new();
         var allowedOperators = AllowedOperators.Select(x => x.Value);
         var tokens = input.Split(' ');
 
@@ -52,8 +53,7 @@ public static class CalcMath
                 var op1 = operands.Pop();
 
                 var result = EvaluateCalculation(x, op1, op2);
-                string calcStr = $"{op1} {x} {op2} = {result}";
-                Console.WriteLine(calcStr);
+                evaluations.Add($"{op1} {x} {op2} = {result}");
                 operands.Push(result.ToString());
             }
             else
@@ -62,7 +62,7 @@ public static class CalcMath
             }
         }
         var endResult = operands.Pop();
-        return double.Parse(endResult);
+        return (double.Parse(endResult), evaluations);
     }
 }
 
