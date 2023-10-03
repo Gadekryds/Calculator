@@ -1,5 +1,6 @@
 ﻿
 using Calculator;
+using Calculator.Calculation;
 
 ApplicationSetup.SetupApplication();
 
@@ -9,22 +10,25 @@ while (true)
     string input = Console.ReadLine()!;
     ApplicationSetup.TranslateCulturalDifference(input);
 
-    var tk = Token.Converter(input);
+    ICalculator calc = new CalculatorEngine();
+    var meta = calc.EvaluateExpression(input);
+
     ConsoleUIHelpers.InsertHeader("Identified Tokens", '-');
-    foreach (var t in tk)
+    foreach (var t in meta.ExpressionTokens)
     {
         Console.WriteLine(t);
     }
 
-    var tokens = ShuntingYardAlgoritm.ConvertInfixToPostfixV2(tk);
     ConsoleUIHelpers.InsertHeader("Postfix Conversion", '-');
-    Console.WriteLine($"{tokens}");
+    Console.WriteLine($"{meta.PostfixExpression}");
 
     ConsoleUIHelpers.InsertHeader("Evaluation", '-');
-    var result = CalcMath.EvaluatePostFixExpression(tokens);
-
+    foreach (var eval in meta.EvaluationSteps)
+    {
+        Console.WriteLine(eval);
+    }
     ConsoleUIHelpers.InsertHeader("Result", '-');
-    Console.WriteLine($"{result}");
+    Console.WriteLine($"{meta.Result}");
 
     Console.WriteLine("\nExit? Y/N");
     var k = Console.ReadKey();
